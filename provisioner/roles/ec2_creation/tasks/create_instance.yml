@@ -3,7 +3,7 @@
   debug:
     msg: "{{ instance[server] }}"
 
-- name: Create instance
+- name: Create instance - with created subnet
   ec2:
     region: "{{ region }}"
     zone: "{{ zone }}"
@@ -11,13 +11,30 @@
     group: "{{ instance[server].security_groups }}"
     instance_type: "{{ instance[server].instance_type }}"
     image: "{{ instance[server].image_id }}"
-    vpc_subnet_id: "{{vpc.subnets[0].id}}"
+    vpc_subnet_id: "{{ vpc.subnets[0].id }}"
     assign_public_ip: "{{ instance[server].assign_public_ip }}"    
     count: 1    
     wait: yes
     instance_tags:
       Name: "{{ instance[server].name }}"
-  when: ec2_instances.instances[instance[server].name]|default("") == ""
+  when: ec2_instances.instances[instance[server].name]|default("") == "" and vpc.subnets is defined
+  register: ec2
+
+- name: Create instance - with defined subnet
+  ec2:
+    region: "{{ region }}"
+    zone: "{{ zone }}"
+    keypair: "{{ key_pair }}"
+    group: "{{ instance[server].security_groups }}"
+    instance_type: "{{ instance[server].instance_type }}"
+    image: "{{ instance[server].image_id }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    assign_public_ip: "{{ instance[server].assign_public_ip }}"    
+    count: 1    
+    wait: yes
+    instance_tags:
+      Name: "{{ instance[server].name }}"
+  when: ec2_instances.instances[instance[server].name]|default("") == "" and subnet_id is defined
   register: ec2
 
 - debug: msg={{ ec2 }}

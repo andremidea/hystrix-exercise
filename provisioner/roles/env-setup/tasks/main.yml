@@ -15,6 +15,7 @@
         routes:
            - dest: 0.0.0.0/0
              gw: igw
+  when: vpc_id is not defined             
   register: vpc
 
 - debug: var=vpc
@@ -23,7 +24,7 @@
   ec2_group:
    name: front
    description: fronts security Group - FRONT
-   vpc_id: "{{vpc.vpc.id}}"
+   vpc_id: "{{ vpc_id | | vpc.vpc.id }}"
    region: "{{region}}"
    rules:
       - proto: tcp
@@ -39,6 +40,7 @@
         to_port: 22
         cidr_ip: 0.0.0.0/0
   register: group
+  when: vpc.vpc.id is defined
 
 - debug: var=group
 
@@ -46,7 +48,7 @@
   ec2_group:
    name: web
    description: fronts security Group
-   vpc_id: "{{vpc.vpc.id}}"
+   vpc_id: "{{ vpc.vpc.id }}"
    region: "{{ region }}"
    rules:
       - proto: all        
@@ -56,6 +58,47 @@
         to_port: 22
         cidr_ip: 0.0.0.0/0
   register: groupweb
+  when: vpc.vpc.id is defined
+
+- name: Creating Security Group
+  ec2_group:
+    name: front
+    description: fronts security Group - FRONT
+    vpc_id: "{{ vpc_id }}"
+    region: "{{region}}"
+    rules:
+       - proto: tcp
+         from_port: 80
+         to_port: 80
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 443
+         to_port: 443
+         cidr_ip: 0.0.0.0/0  
+       - proto: tcp
+         from_port: 22
+         to_port: 22
+         cidr_ip: 0.0.0.0/0
+  register: group
+  when: vpc_id is defined
+
+- debug: var=group
+
+- name: Creating Security Group - WEB
+  ec2_group:
+   name: web
+   description: fronts security Group
+   vpc_id: "{{ vpc_id }}"
+   region: "{{ region }}"
+   rules:
+      - proto: all        
+        group_name: front
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+  register: groupweb
+  when: vpc_id is defined 
  
 - debug: var=groupweb
  

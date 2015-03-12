@@ -1,21 +1,20 @@
 ---
-domain: andremidea.info
-region: "sa-east-1"
-zone: "sa-east-1a"  
+region: "us-west-2"
+zone: "us-west-2a"  
+vpc_id: vpc-c64dfba3
+subnet_id: subnet-726cc005
 
 instance:
   front:
     instance_type: "t2.small"
-    image_id: "ami-af9925b2" #Amazon Linux 64 bits blank slate
-    security_groups: ["front"]
-    vpc_subnet_id: subnet-a459f4c1    
+    image_id: "ami-dfc39aef" #Amazon Linux 64 bits blank slate
+    security_groups: ["front"]    
     assign_public_ip: true
     name: "front"
   web:
     instance_type: "t2.small"
-    image_id: "ami-af9925b2" #Amazon Linux 64 bits blank slate
-    security_groups: ["web"]
-    vpc_subnet_id: subnet-a459f4c1    
+    image_id: "ami-dfc39aef" #Amazon Linux 64 bits blank slate
+    security_groups: ["web"]    
     assign_public_ip: true
     name: "web"
   
