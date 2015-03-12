@@ -36,9 +36,10 @@ Com 1 Serviço exemplo, que lista Gists do GitHub e com o Hystrix dashboard conf
 
 - Instale o boto
     - pip install boto
-    - crie o arquivo ~/.boto com suas credenciais. [Credentials]
-                                                   aws_access_key_id = 112123
-                                                   aws_secret_access_key = aaddkk
+    - crie o arquivo ~/.boto com suas credenciais. 
+    `[Credentials]
+      aws_access_key_id = 112123
+      aws_secret_access_key = aaddkk`
 
 ---
 
@@ -107,7 +108,7 @@ Máquina que contém o serviço.
 ### O Dashboard
 - http://ip-da-maquina-front/dashboard
 
-e para  visualizar as métricas do serviço é só colocar a url do stream (http://ip-da-maquina-front/api/hystrix.stream) do serciço no Hystrix Dashboard.
+e para  visualizar as métricas do serviço é só colocar a url do stream (http://ip-da-maquina-front/api/hystrix.stream) do serviço no Hystrix Dashboard.
 
 
 Obs: No final do provisionamento o script retorna uma mensagem com os ips para acesso, ex:
