@@ -37,9 +37,12 @@ Com 1 Serviço exemplo, que lista Gists do GitHub e com o Hystrix dashboard conf
 - Instale o boto
     - pip install boto
     - crie o arquivo ~/.boto com suas credenciais. 
+    
     `[Credentials]
       aws_access_key_id = 112123
       aws_secret_access_key = aaddkk`
+
+- Configure a aws cli
 
 ---
 
