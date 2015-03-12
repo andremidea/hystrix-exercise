@@ -49,3 +49,16 @@
       - { role: service-deploy, tags: ["service-deploy"]}             
   tags: web
 
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:  
+    - debug: 
+        var: item 
+      with_items:                           
+        - " ip front: {{groups['front'][0]}}                                   "
+        - " -Public Gists: http://{{groups['front'][0]}}/api                   "
+        - " -User Gists: http://{{groups['front'][0]}}/api/:username           "
+        - " -Hystrix Stream: http://{{groups['front'][0]}}/api/hystrix.stream  "
+        - " -Hystrix Dashboard: http://{{groups['front'][0]}}/dashboard        "                   
+

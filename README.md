@@ -91,8 +91,8 @@ Máquina que contém o serviço.
 - Após a criação das instâncias  adicione-as no inventory do ansible, eles estão em front/inventory ex: 
 
 `[front]
-172.16.0.71
-[web]
+172.16.0.71`
+`[web]
 172.16.0.71`
 
 
@@ -107,8 +107,27 @@ Máquina que contém o serviço.
 ### O Dashboard
 - http://ip-da-maquina-front/dashboard
 
-e para  visualizar as métricas do serviço é só colocar a url do serviço no Hystrix Dashboard.
+e para  visualizar as métricas do serviço é só colocar a url do stream (http://ip-da-maquina-front/api/hystrix.stream) do serciço no Hystrix Dashboard.
 
+
+Obs: No final do provisionamento o script retorna uma mensagem com os ips para acesso, ex:
+
+`TASK: [debug ] ****************************************************************
+ok: [localhost] => (item= ip front: 54.94.160.197                                   ) => {
+    "item": " ip front: 54.94.160.197                                   "
+}
+ok: [localhost] => (item= -Public Gists: http://54.94.160.197/api                   ) => {
+    "item": " -Public Gists: http://54.94.160.197/api                   "
+}
+ok: [localhost] => (item= -User Gists: http://54.94.160.197/api/:username           ) => {
+    "item": " -User Gists: http://54.94.160.197/api/:username           "
+}
+ok: [localhost] => (item= -Hystrix Stream: http://54.94.160.197/api/hystrix.stream  ) => {
+    "item": " -Hystrix Stream: http://54.94.160.197/api/hystrix.stream  "
+}
+ok: [localhost] => (item= -Hystrix Dashboard: http://54.94.160.197/dashboard        ) => {
+    "item": " -Hystrix Dashboard: http://54.94.160.197/dashboard        "
+}`
  
 ---
 
