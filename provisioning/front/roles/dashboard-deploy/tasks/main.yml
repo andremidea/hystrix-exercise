@@ -1,0 +1,3 @@
+---
+- include: dashboard.yml tags=dashboard-deploy
+# - include: service.yml tags=service-deploy

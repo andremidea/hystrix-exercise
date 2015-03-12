@@ -1,0 +1,45 @@
+---
+#Create the instance
+- hosts: localhost
+  connection: local
+  gather_facts: false  
+  roles:
+    - { role: ec2_creation, server: front }
+  tags: front  
+
+#Configure and install all we need
+- hosts: front
+  gather_facts: true
+  remote_user: ec2-user
+  sudo: yes  
+  vars:
+    java_version: 8
+  roles:
+      - common                  
+      - { role: williamyeh.oracle-java }       
+      - setup
+      - { role: dashboard-deploy, tags: ["dashboard-deploy"]}
+      - clean_up   
+  tags: front
+
+#Create the instance
+- hosts: localhost
+  connection: local
+  gather_facts: false  
+  roles:
+    - { role: ec2_creation, server: web }
+  tags: web
+
+
+#Configure and install all we need
+- hosts: web
+  gather_facts: true
+  remote_user: ec2-user
+  sudo: yes      
+  roles:
+      - common                  
+      - { role: williamyeh.oracle-java, java_version: 8 , tags: ["java"]}       
+      - setup
+      - { role: service-deploy, tags: ["service-deploy"]}       
+      - clean_up   
+  tags: web
