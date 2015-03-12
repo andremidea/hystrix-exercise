@@ -1,0 +1,15 @@
+---
+ - name: setting keys // set up authorized_keys
+   authorized_key:
+    user: ec2-user
+    key: "{{ item }}"
+   with_file:     
+     - ssh_keys/midea
+   remote_user: ec2-user
+   sudo: yes
+   tags: ssh_keys    
+ 
+ - copy:  src=ssh_config dest=/home/ec2-user/.ssh/config owner=ec2-user group=ec2-user mode=0700
+   remote_user: ec2-user
+   sudo: yes
+   tags: ssh_keys

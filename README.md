@@ -28,17 +28,19 @@
     - crie o arquivo ~/.boto com suas credenciais. [Credentials]
                                                    aws_access_key_id = 112123
                                                    aws_secret_access_key = aaddkk
+---
+## O que será configurado?
 
-## Recursos da AWS
+### Recursos da AWS
 
 - VPC - é criado um vpc com internet gateway e 1 subnet
 - Security Groups 
  - Front: Portas 22, 443 e 80 liberados para acesso externo
  - Web: Porta 22 liberada para acesso externo e TCP all para o security group *Front*                                                   
 
-## Front
+### Front
 
-### Descrição
+#### Descrição
 
 Único ponto de acesso http, nele temos um nginx que faz um proxy reverso para o serviço que está em outra máquina e para o Dashboard.
 
@@ -48,9 +50,9 @@
 - tomcat
 - Hystrix Dashboard
 
-## Web
+### Web
 
-### Descrição
+#### Descrição
 
 Máquina que contém o serviço.
 
@@ -58,8 +60,9 @@ Máquina que contém o serviço.
 
 - Java com o Tanuki Wrapper
 
+---
 
-### Como Utilizar - Novas Máquina
+### Como Provisionar - Novas Máquina
 
 - Instale as depencências do projeto, `ansible-galaxy install -r requirements`
 - Altere as configurações do projeto no arquivo ** front/group_vars/all **
