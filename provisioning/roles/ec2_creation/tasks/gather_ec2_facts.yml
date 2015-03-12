@@ -1,9 +1,0 @@
----
-- name: Check if instance exists
-  ec2_instances:
-    region: "{{ region }}"    
-  register: ec2_instances
-
-- name: Debug EC2 facts
-  debug: msg="{{ ec2_instances.instances }}"
-

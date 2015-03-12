@@ -67,8 +67,9 @@ Máquina que contém o serviço.
 
 ### Como Provisionar - Novas Máquina
 
+- cd provisioner
 - Instale as depencências do projeto, `ansible-galaxy install -r requirements`
-- Altere as configurações do projeto no arquivo ** front/group_vars/all **
+- Altere as configurações do projeto no arquivo ** /group_vars/all **
 - Adicione a chave da AWS no bash ` ssh-add ~/.ssh/chave.pem `
 - Execute o playbook ` ansible-playbook provisioning.yml -i inventory
     - provisioning.yml é o playbook
