@@ -1,3 +1,4 @@
 ---
-- include: dashboard.yml tags=dashboard-deploy
-# - include: service.yml tags=service-deploy
+- name: download war
+  get_url: url=http://search.maven.org/remotecontent?filepath=com/netflix/hystrix/hystrix-dashboard/1.4.0/hystrix-dashboard-1.4.0.war dest=/var/lib/tomcat8/webapps/dashboard.war mode=600 owner=tomcat group=tomcat
+  tags: dashboard-deploy

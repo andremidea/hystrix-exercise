@@ -5,6 +5,8 @@ import com.andremidea.hystrixservice.client.GitHubFallbackClient;
 import com.andremidea.hystrixservice.model.Gists;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Component
 public class GitHubService {
 
+    private static final Log log = LogFactory.getLog(GitHubService.class);
 
     @Autowired
     private GitHubClient gitHubClient;
@@ -21,10 +24,15 @@ public class GitHubService {
     private GitHubClient gitHubFallbackClient = new GitHubFallbackClient();
 
     @HystrixCommand(fallbackMethod = "publicFallback", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
     })
     public List<Gists> publicGists() {
-        return gitHubClient.publicGists();
+        try {
+            return gitHubClient.publicGists();
+        } catch (Exception e) {
+            log.error(e);
+            throw e;
+        }
     }
 
     public List<Gists> publicFallback() {
@@ -32,7 +40,7 @@ public class GitHubService {
     }
 
     @HystrixCommand(fallbackMethod = "userFallback", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
     })
     public List<Gists> userGists(String username) {
         return gitHubClient.userGists(username);

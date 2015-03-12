@@ -1,4 +1,4 @@
-# Moltrio Environment Provisioner
+# Hystrix Environment Provisioner
 
 * * *
 > ### Tecnologias
@@ -21,11 +21,7 @@
 
 - Instale as dependências
     - brew install python
-    - pip install virtualenv
 
-- Crie um virtualenv para o projeto
-    - virtualenv /foo/bar
-    - ative o env source /foo/bar/bin/activate
 
 - Instale o boto
     - pip install boto
@@ -33,38 +29,62 @@
                                                    aws_access_key_id = 112123
                                                    aws_secret_access_key = aaddkk
 
-- Caso queira provisionar a máquina no Ansible ao invés da aws aponte o ansible para usar o python do venv no seu inventory localhost. `localhost ansible_python_interpreter=/foo/bar/bin/python`
-isso só é necessário para os playbooks que se comunicam com a AWS.
+## Recursos da AWS
 
+- VPC - é criado um vpc com internet gateway e 1 subnet
+- Security Groups 
+ - Front: Portas 22, 443 e 80 liberados para acesso externo
+ - Web: Porta 22 liberada para acesso externo e TCP all para o security group *Front*                                                   
 
 ## Front
 
 ### Descrição
 
-Máquina que ira conter, o Jenkins e o WebService em Sinatra. Também servirá de Bastion Host para as outras máquinas.
+Único ponto de acesso http, nele temos um nginx que faz um proxy reverso para o serviço que está em outra máquina e para o Dashboard.
 
 **Components**
 
 - nginx
-- jenkins
-- ruby
+- tomcat
+- Hystrix Dashboard
 
-### Como Utilizar - Nova Máquina
+## Web
+
+### Descrição
+
+Máquina que contém o serviço.
+
+**Components**
+
+- Java com o Tanuki Wrapper
+
+
+
+### Como Utilizar - Novas Máquina
 
 - Instale as depencências do projeto, `ansible-galaxy install -r requirements`
 - Altere as configurações do projeto no arquivo ** front/group_vars/all **
 - Adicione a chave da AWS no bash ` ssh-add ~/.ssh/chave.pem `
-- Execute o playbook ` ansible-playbook provisioning.yml -i localhost
+- Execute o playbook ` ansible-playbook provisioning.yml -i inventory
     - provisioning.yml é o playbook
-    - **-i** é o arquivo de inventário, no caso da criação da máquina é localhost pois ainda não temos ela.    
-- Após isso a máquina será criada na AWS e terá inicio o provisionamento dela.
+    - **-i** é o arquivo de inventário
+- Após isso a máquina será criada na AWS e terá inicio o provisionamento.
 
-- Após a criação da instância e adicione no inventory do ansible, eles estão em front/production ex: 
-`[ec2hosts]
+- Após a criação das instâncias  adicione-as no inventory do ansible, eles estão em front/inventory ex: 
+
+`[front]
+172.16.0.71
+[web]
 172.16.0.71`
  
 -
 ### Como Utilizar - Máquina Existente
 
-- Mesmo processo anterior, só pule a parte do provisionamento e adicione o ip no inventory file correto. Por fim execute o playbook build.yml
-`ansible-playbook build.yml -i production
+- Mesmo processo anterior, só pule a parte do provisionamento e adicione o ip no inventory file correto.
+`ansible-playbook provisioning.yml -i inventory
+
+### Deploy do Servico
+
+- É possivel provisionar apenas a parte do serviço novamente.
+`ansible-playbook provisioning.yml -i inventory --tags="service-deploy"
+

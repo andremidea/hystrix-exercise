@@ -1,4 +1,10 @@
 ---
+#Setup the environment
+- hosts: localhost
+  connection: local
+  gather_facts: false  
+  roles:
+   - {role: env-setup, tags: ["env"]}
 #Create the instance
 - hosts: localhost
   connection: local
@@ -7,6 +13,14 @@
     - { role: ec2_creation, server: front }
   tags: front  
 
+#Create the instance
+- hosts: localhost
+  connection: local
+  gather_facts: false  
+  roles:
+    - { role: ec2_creation, server: web }
+  tags: web
+  
 #Configure and install all we need
 - hosts: front
   gather_facts: true
@@ -22,14 +36,6 @@
       - clean_up   
   tags: front
 
-#Create the instance
-- hosts: localhost
-  connection: local
-  gather_facts: false  
-  roles:
-    - { role: ec2_creation, server: web }
-  tags: web
-
 
 #Configure and install all we need
 - hosts: web
@@ -40,6 +46,6 @@
       - common                  
       - { role: williamyeh.oracle-java, java_version: 8 , tags: ["java"]}       
       - setup
-      - { role: service-deploy, tags: ["service-deploy"]}       
-      - clean_up   
+      - { role: service-deploy, tags: ["service-deploy"]}             
   tags: web
+
