@@ -7,10 +7,11 @@ Com 1 Serviço exemplo, que lista Gists do GitHub e com o Hystrix dashboard conf
 * * *
 > ### Tecnologias
 
-> ### Provisionamento
+> #### Provisionamento
 > * [Ansible](http://docs.ansible.com/)
 > * [Boto](https://github.com/boto/boto)
-> ### Serviço
+
+> #### Serviço
 > * [SpringBoot](http://docs.spring.io/spring-boot/)
 > * [Spring Cloud](http://cloud.spring.io/)
 > * [Netflix Hystrix](https://github.com/Netflix/Hystrix)
