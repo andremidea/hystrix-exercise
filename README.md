@@ -28,7 +28,10 @@
     - crie o arquivo ~/.boto com suas credenciais. [Credentials]
                                                    aws_access_key_id = 112123
                                                    aws_secret_access_key = aaddkk
+
 ---
+
+
 ## O que será configurado?
 
 ### Recursos da AWS
