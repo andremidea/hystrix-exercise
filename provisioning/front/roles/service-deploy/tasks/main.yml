@@ -3,7 +3,7 @@
   shell: update-alternatives --set java /usr/java/default/bin/java
 
 - name: Export JAVA_HOME  
-  copy: content="export JAVA_HOME=/usr/java/default/" dest=/etc/profile.d/java.sh
+  copy: content="export JAVA_HOME=/usr/java/default" dest=/etc/profile.d/java.sh 
 
 - name: Clonning the Project
   git: repo=git@github.com:andremidea/hystrix-exercise.git dest=/tmp/hystrix-exercise accept_hostkey=true key_file=/home/ec2-user/.ssh/id_rsa  
@@ -15,13 +15,13 @@
   file: path=/data/service state=directory
 
 - name: copy wrapper files to service directory
-  command: mv -f /tmp/hystrix-exercise/hystrix-service/wrapper /data//service/wrapper
+  shell: cp -rf /tmp/hystrix-exercise/hystrix-service/wrapper/* /data/service/wrapper/.
 
 - name: copy service jar to service directory
   command: cp -f /tmp/hystrix-exercise/hystrix-service/target/hystrix-service-1.0-SNAPSHOT.jar /data/service/hystrix-service.jar
 
 - name: create symbolic link
-  file: src=/home/ec2-user/service/wrapper/hystrix-service dest=/etc/init.d/hystrix-service state=link
+  file: src=/data/service/wrapper/hystrix-service dest=/etc/init.d/hystrix-service state=link
 
   
 

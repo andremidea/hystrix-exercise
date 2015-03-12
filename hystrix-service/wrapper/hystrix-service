@@ -19,7 +19,7 @@
 # Optimized for use with version 3.3.6 of the Wrapper.
 
 # Application
-APP_NAME="Gists Service"
+APP_NAME="gists-service"
 APP_LONG_NAME="GitHub Hystrix Services"
 JMX_PORT=8101
 MAX_MEM=512
@@ -498,6 +498,7 @@ console() {
     then
         # The string passed to eval must handles spaces in paths correctly.
         COMMAND_LINE="$CMDNICE \"$WRAPPER_CMD\" \"$WRAPPER_CONF\" wrapper.syslog.ident=\"$APP_NAME\" wrapper.pidfile=\"$PIDFILE\" wrapper.name=\"$APP_NAME\" wrapper.displayname=\"$APP_LONG_NAME\" $ANCHORPROP $STATUSPROP $LOCKPROP"
+        echo $COMMAND_LINE
         eval $COMMAND_LINE
     else
         echo "$APP_LONG_NAME is already running."
