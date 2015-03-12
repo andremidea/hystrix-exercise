@@ -12,13 +12,16 @@
   file: path=/home/ec2-user/service state=directory
 
 - name: copy wrapper files to service directory
-  copy: src=/tmp/hystrix-exercise/hystrix-service/wrapper dest=/home/ec2-user/service/wrapper owner=ec2-user group=ec2-user mode=0644
+  command: creates=/home/ec2-user/service/wrapper mv /tmp/hystrix-exercise/hystrix-service/wrapper /home/ec2-user/service/wrapper
 
 - name: copy service jar to service directory
-  copy: src=/tmp/hystrix-exercise/hystrix-service/target/hystrix-service-1.0-SNAPSHOT.jar dest=/home/ec2-user/service/hystrix-service.jar owner=ec2-user group=ec2-user mode=0644
+  command: cp -f /tmp/hystrix-exercise/hystrix-service/target/hystrix-service-1.0-SNAPSHOT.jar /home/ec2-user/service/hystrix-service.jar
+
+- name: set permissions correctly
+  file: path=/home/ec2-user/service owner=ec2-user group=ec2-user recurse=yes
 
 - name: create symbolic link
-  file: src=/home/ec2-user/service/service/hystrix-service dest=/etc/init.d/hystrix-service state=lik
+  file: src=/home/ec2-user/service/wrapper/hystrix-service dest=/etc/init.d/hystrix-service state=link
 
   
 

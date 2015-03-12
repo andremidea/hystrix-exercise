@@ -19,8 +19,8 @@
 # Optimized for use with version 3.3.6 of the Wrapper.
 
 # Application
-APP_NAME="tornado-manager"
-APP_LONG_NAME="Tornado Manager"
+APP_NAME="Gists Service"
+APP_LONG_NAME="GitHub Hystrix Services"
 JMX_PORT=8101
 MAX_MEM=512
 PERM_SIZE=128m
@@ -29,7 +29,7 @@ export APP_NAME APP_LONG_NAME JMX_PORT MAX_MEM PERM_SIZE
 
 # Wrapper
 WRAPPER_CMD="bin/wrapper"
-WRAPPER_CONF="tornado.conf"
+WRAPPER_CONF="hystrix-service.conf"
 export LANG="pt_BR.utf8"
 
 export ARCH=$(uname -m)
