@@ -23,5 +23,6 @@
 - name: create symbolic link
   file: src=/data/service/wrapper/hystrix-service dest=/etc/init.d/hystrix-service state=link
 
-  
+- name: start service
+  service: name=hystrix-service state=started  
 
