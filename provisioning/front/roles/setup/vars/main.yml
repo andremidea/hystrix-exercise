@@ -1,7 +1,0 @@
----
-packages:
-  - git   
-  - nginx   
-  - apache-maven
-  - tomcat8
-  

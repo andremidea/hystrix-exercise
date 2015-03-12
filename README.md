@@ -59,7 +59,6 @@ Máquina que contém o serviço.
 - Java com o Tanuki Wrapper
 
 
-
 ### Como Utilizar - Novas Máquina
 
 - Instale as depencências do projeto, `ansible-galaxy install -r requirements`
@@ -76,8 +75,26 @@ Máquina que contém o serviço.
 172.16.0.71
 [web]
 172.16.0.71`
+
+
+## Acessando
+
+### O Serviço
+
+- http://ip-da-maquina-front/api/ - lista os últimos Gists
+- http://ip-da-maquina-front/api/username - lista os gists do usuário
+- http://ip-da-maquina-front/api/hystrix.stream - stream do hystrix
+
+### O Dashboard
+- http://ip-da-maquina-front/dashboard
+
+e para  visualizar as métricas do serviço é só colocar a url do serviço no Hystrix Dashboard.
+
  
--
+---
+
+## Manutenção
+
 ### Como Utilizar - Máquina Existente
 
 - Mesmo processo anterior, só pule a parte do provisionamento e adicione o ip no inventory file correto.

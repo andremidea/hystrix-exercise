@@ -16,8 +16,6 @@ import java.util.List;
 @Component
 public class GitHubService {
 
-    private static final Log log = LogFactory.getLog(GitHubService.class);
-
     @Autowired
     private GitHubClient gitHubClient;
 
@@ -27,12 +25,7 @@ public class GitHubService {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
     })
     public List<Gists> publicGists() {
-        try {
-            return gitHubClient.publicGists();
-        } catch (Exception e) {
-            log.error(e);
-            throw e;
-        }
+        return gitHubClient.publicGists();
     }
 
     public List<Gists> publicFallback() {
