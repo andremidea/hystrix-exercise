@@ -77,7 +77,7 @@ Máquina que contém o serviço.
 
 ---
 
-### Como Provisionar - Novas Máquina
+### Como Provisionar - Novas Máquinas
 
 - cd provisioner
 - Instale as depencências do projeto, `ansible-galaxy install -r requirements`
