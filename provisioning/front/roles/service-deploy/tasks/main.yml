@@ -26,3 +26,5 @@
 - name: start service
   service: name=hystrix-service state=started  
 
+- name: addind service to chkconfig
+  shell: chkconfig --level 345 hystrix-service on
