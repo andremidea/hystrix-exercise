@@ -1,0 +1,38 @@
+---
+- name: Get instance information
+  debug:
+    msg: "{{ instance[server] }}"
+
+- name: Create instance
+  ec2:
+    region: "{{ region }}"
+    zone: "{{ zone }}"
+    keypair: "{{ key_pair }}"
+    group: "{{ instance[server].security_groups }}"
+    instance_type: "{{ instance[server].instance_type }}"
+    image: "{{ instance[server].image_id }}"
+    vpc_subnet_id: "{{vpc.subnets[0].id}}"
+    assign_public_ip: "{{ instance[server].assign_public_ip }}"    
+    count: 1    
+    wait: yes
+    instance_tags:
+      Name: "{{ instance[server].name }}"
+  when: ec2_instances.instances[instance[server].name]|default("") == ""
+  register: ec2
+
+- debug: msg={{ ec2 }}
+
+- name: Add new instance public ig to host group
+  add_host: hostname="{{ item.public_ip }}" groupname={{ instance[server].name }}  
+  with_items: ec2.instances
+  when: ec2.instances is defined
+
+- name: Add new instance private ip to host group
+  add_host: hostname="{{ item.private_ip }}" groupname={{ instance[server].name }}_private  
+  with_items: ec2.instances
+  when: ec2.instances is defined
+
+- name: Wait for SSH to come up
+  wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started  
+  with_items: ec2.instances
+  when: ec2.instances is defined

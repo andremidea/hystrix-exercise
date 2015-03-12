@@ -1,0 +1,6 @@
+---
+packages:
+  - git   
+  - nginx   
+  - tomcat8
+  

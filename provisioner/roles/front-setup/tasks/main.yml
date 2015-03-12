@@ -1,0 +1,11 @@
+---
+ 
+ # Main tasks for all hosts
+ - include: create_user.yml
+ - include: packages.yml
+ - include: nginx.yml 
+
+ 
+
+ 
+

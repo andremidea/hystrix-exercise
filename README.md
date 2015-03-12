@@ -1,10 +1,20 @@
 # Hystrix Environment Provisioner
 
+Provisiona um ambiente de testes do Hystrix.
+
+Com 1 Serviço exemplo, que lista Gists do GitHub e com o Hystrix dashboard configurado.
+
 * * *
 > ### Tecnologias
 
+> ### Provisionamento
 > * [Ansible](http://docs.ansible.com/)
 > * [Boto](https://github.com/boto/boto)
+> ### Serviço
+> * [SpringBoot](http://docs.spring.io/spring-boot/)
+> * [Spring Cloud](http://cloud.spring.io/)
+> * [Netflix Hystrix](https://github.com/Netflix/Hystrix)
+> * [Netflix Feign](https://github.com/Netflix/feign)
 
 
 * * *
@@ -39,7 +49,8 @@
 - VPC - é criado um vpc com internet gateway e 1 subnet
 - Security Groups 
  - Front: Portas 22, 443 e 80 liberados para acesso externo
- - Web: Porta 22 liberada para acesso externo e TCP all para o security group *Front*                                                   
+ - Web: Porta 22 liberada para acesso externo e TCP all para o security group *Front*
+- 2 EC2, 1 para o Front e outra para o Serviço.                                                    
 
 ### Front
 

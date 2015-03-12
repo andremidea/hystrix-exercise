@@ -1,0 +1,9 @@
+---
+- name: Configurando nginx
+  template: src=nginx.j2 dest=/etc/nginx/conf.d/nginx.conf force=yes group=nginx owner=nginx
+  tags: nginx
+
+- name: Restart nginx
+  action: service name=nginx state=restarted
+  tags:
+    - nginx
